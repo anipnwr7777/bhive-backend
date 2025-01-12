@@ -15,7 +15,8 @@ const getLatestNav = async (params) => {
       },
     };
     const response = await axios.request(options);
-    return response;
+    // console.log(response.data?.[0])
+    return response.data?.[0];
   } catch (error) {
     console.error(error);
   }

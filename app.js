@@ -3,10 +3,12 @@ const express = require("express");
 const knex = require("./db");
 const baseRouter = require("./router");
 var morgan = require("morgan");
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
 
+app.use(cors());
 app.use(morgan("combined"));
 app.use("/api/", baseRouter);
 

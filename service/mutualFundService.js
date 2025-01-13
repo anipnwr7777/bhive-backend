@@ -3,10 +3,8 @@ const User = require("../models/User");
 const rapidApiService = require('./rapidApi')
 
 const getInvestmentsForUser = async (userId) => {
-	if (!/^\d+$/.test(userId)) {
-		return res
-			.status(400)
-			.json({ error: "Invalid userId. It must be a numeric value." });
+	if (!userId) {
+		throw new Error({ error: "Invalid userId. It must be a numeric value." });
 	}
 
 	try {
@@ -52,7 +50,6 @@ const getPortfolio = async (req, res, next) => {
             const data = await rapidApiService.getLatestNav({
                 Scheme_Code: investment.scheme_code,
             });
-            console.log(data)
             return {
                 scheme_code: investment.scheme_code,
                 purchaseNav: investment.purchase_nav,
@@ -80,8 +77,6 @@ const createInvestment = async (req, res) => {
     try {
         const { user_id } = req.params;
         const { scheme_code, investment_amount } = req.body;
-
-        console.log('inside create investment')
 
         if (!scheme_code || !investment_amount) {
             return res
